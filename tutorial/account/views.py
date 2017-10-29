@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse,redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -11,14 +11,18 @@ def home(request):
     args = {"name": name, "college": college, "branch": branch, "year": num}
     return render(request, 'account/home.html', args)
 
+
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('/account')
-        else:
-            form = UserCreationForm()
+    else:
+        form = UserCreationForm()
 
-            args = {'form':form}
-            return render(request, 'account/reg_form.html',args)
+        args={'form':form}
+        return render(request, 'account/reg_form.html', args)
+
+
+
